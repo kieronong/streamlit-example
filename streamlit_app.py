@@ -7,7 +7,7 @@ st.title('Yogurt Park: Froyo Orders in 2018')
 chart_data = pd.read_csv("yopo_2015.csv")
 chart_data = chart_data.set_index('Flavor')
 
-st.bar_chart(chart_data)
+st.bar_chart(chart_data, color=['#ffaa00', '#ff00aa', '#00aaff', '#aaff00'])
 
 # minion_satisfaction = data[["Approving"]]
 
