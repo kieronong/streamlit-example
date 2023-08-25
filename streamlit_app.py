@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-st.title('Gru\'s Performance Review')
+st.title('Yopo Orders in 2015')
 
 def load_data(nrows):
     data = pd.read_csv('minion_satisfaction.csv', nrows=nrows)
@@ -13,35 +13,33 @@ def load_data(nrows):
 
 data = load_data(10000)
 
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
-
 st.subheader('Minion Satisfaction')
 
-minion_satisfaction = data[["Approving"]]
+st.line_chart(data)
 
-min_date = data.index.min().to_pydatetime()
-max_date = data.index.max().to_pydatetime()
+# minion_satisfaction = data[["Approving"]]
 
-[select_min, select_max] = st.slider("Choose a date range.", 
-    max_value=max_date, 
-    min_value=min_date,
-    value=[min_date, max_date])
+# min_date = data.index.min().to_pydatetime()
+# max_date = data.index.max().to_pydatetime()
 
-minion_satisfaction_selected = minion_satisfaction.loc[select_min : select_max].reset_index()
+# [select_min, select_max] = st.slider("Choose a date range.", 
+#     max_value=max_date, 
+#     min_value=min_date,
+#     value=[min_date, max_date])
 
-minion_satisfaction_chart = alt.Chart(minion_satisfaction_selected).mark_line().encode(
-     alt.X('Date',
-        type='temporal',
-        axis=alt.Axis(
-            grid=False, 
-            tickCount={"interval": "month", "step": 4},
-            labelOverlap=True,
-            labelExpr="[timeFormat(datum.value, '%b')[0], timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']" )), 
-     alt.Y('Approving', 
-        title='Percentage of Minions Approving', 
-        axis=alt.Axis(grid=True),
-        scale=alt.Scale(domain=[0, 100])))
+# minion_satisfaction_selected = minion_satisfaction.loc[select_min : select_max].reset_index()
 
-st.altair_chart(minion_satisfaction_chart, use_container_width=True)
+# minion_satisfaction_chart = alt.Chart(minion_satisfaction_selected).mark_line().encode(
+#      alt.X('Date',
+#         type='temporal',
+#         axis=alt.Axis(
+#             grid=False, 
+#             tickCount={"interval": "month", "step": 4},
+#             labelOverlap=True,
+#             labelExpr="[timeFormat(datum.value, '%b')[0], timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']" )), 
+#      alt.Y('Approving', 
+#         title='Percentage of Minions Approving', 
+#         axis=alt.Axis(grid=True),
+#         scale=alt.Scale(domain=[0, 100])))
+
+# st.altair_chart(minion_satisfaction_chart, use_container_width=True)
