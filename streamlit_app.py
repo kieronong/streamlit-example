@@ -11,7 +11,7 @@ def load_data(nrows):
     data = data.set_index(['Date'])
     return data
 
-data = load_data()
+data = load_data(10000)
 
 st.subheader('Minion Satisfaction')
 
