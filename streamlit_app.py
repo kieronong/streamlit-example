@@ -9,7 +9,7 @@ chart_data = chart_data.set_index('Flavor')
 
 chart_data
 
-st.bar_chart(chart_data, x='Orders', y='Flavor')
+st.bar_chart(chart_data, y='Flavor')
 
 # minion_satisfaction = data[["Approving"]]
 
