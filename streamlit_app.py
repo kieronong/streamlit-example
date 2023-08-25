@@ -3,16 +3,16 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-st.title('Yoghurt Park: Froyo Orders in 2018')
+st.title('Yogurt Park: Froyo Orders in 2018')
 
 def load_data(nrows):
     data = pd.read_csv('yopo_2015.csv', nrows=nrows)
-    data = data.set_index(['Month'])
+    data = data.set_index(['Flavor'])
     return data
 
 data = load_data(10000)
 
-st.line_chart(data)
+st.bar_chart(data)
 
 # minion_satisfaction = data[["Approving"]]
 
