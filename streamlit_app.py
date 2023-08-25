@@ -5,8 +5,8 @@ import numpy as np
 st.title('Yogurt Park: Froyo Orders in 2018')
 
 chart_data = pd.DataFrame(
-    np.random.randn(20, 3),
-    columns=["a", "b", "c"])
+    1000,
+    columns=["Chocolate", "Strawberry", "Vanilla"])
 
 st.bar_chart(chart_data)
 
