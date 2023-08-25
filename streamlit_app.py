@@ -1,38 +1,47 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
 import streamlit as st
+import pandas as pd
+import numpy as np
+import altair as alt
 
-"""
-# Welcome to Streamlit!
+st.title('Gru\'s Performance Review')
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
+def load_data(nrows):
+    data = pd.read_csv('minion_satisfaction.csv', nrows=nrows)
+    data['Date'] = pd.to_datetime(data['Date'])
+    data = data.set_index(['Date'])
+    return data
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+data = load_data(10000)
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+if st.checkbox('Show raw data'):
+    st.subheader('Raw data')
+    st.write(data)
 
+st.subheader('Minion Satisfaction')
 
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
+minion_satisfaction = data[["Approving"]]
 
-    Point = namedtuple('Point', 'x y')
-    data = []
+min_date = data.index.min().to_pydatetime()
+max_date = data.index.max().to_pydatetime()
 
-    points_per_turn = total_points / num_turns
+[select_min, select_max] = st.slider("Choose a date range.", 
+    max_value=max_date, 
+    min_value=min_date,
+    value=[min_date, max_date])
 
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
+minion_satisfaction_selected = minion_satisfaction.loc[select_min : select_max].reset_index()
 
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+minion_satisfaction_chart = alt.Chart(minion_satisfaction_selected).mark_line().encode(
+     alt.X('Date',
+        type='temporal',
+        axis=alt.Axis(
+            grid=False, 
+            tickCount={"interval": "month", "step": 4},
+            labelOverlap=True,
+            labelExpr="[timeFormat(datum.value, '%b')[0], timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']" )), 
+     alt.Y('Approving', 
+        title='Percentage of Minions Approving', 
+        axis=alt.Axis(grid=True),
+        scale=alt.Scale(domain=[0, 100])))
+
+st.altair_chart(minion_satisfaction_chart, use_container_width=True)
