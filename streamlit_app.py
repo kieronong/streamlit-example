@@ -5,6 +5,7 @@ import numpy as np
 st.title('Yogurt Park: Froyo Orders in 2018')
 
 chart_data = pd.read_csv("yopo_2015.csv")
+chart_data = chart_data[["Flavor", "Orders"]]
 
 chart_data
 
