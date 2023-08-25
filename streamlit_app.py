@@ -6,7 +6,7 @@ st.title('Yogurt Park: Froyo Orders in 2018')
 
 chart_data = pd.read_csv("yopo_2015.csv")
 
-st.bar_chart(chart_data)
+st.bar_chart(chart_data, x='Orders', y='Flavor')
 
 # minion_satisfaction = data[["Approving"]]
 
