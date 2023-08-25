@@ -1,14 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import altair as alt
 
 st.title('Yogurt Park: Froyo Orders in 2018')
 
-data = pd.read_csv('yopo_2015.csv')
-data = data.set_index('Flavor')
+chart_data = pd.DataFrame(
+    np.random.randn(20, 3),
+    columns=["a", "b", "c"])
 
-st.bar_chart(data)
+st.bar_chart(chart_data)
 
 # minion_satisfaction = data[["Approving"]]
 
