@@ -7,7 +7,7 @@ st.title('Yogurt Park: Froyo Orders in 2018')
 
 def load_data(nrows):
     data = pd.read_csv('yopo_2015.csv', nrows=nrows)
-    data = data.set_index(['Flavor'])
+    # data = data.set_index(['Flavor'])
     return data
 
 data = load_data(10000)
